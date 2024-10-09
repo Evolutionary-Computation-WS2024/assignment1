@@ -2,10 +2,12 @@ package evolcomp.io;
 
 import evolcomp.tsp.Solution;
 
+import java.util.List;
+
 public final class SolutionExporter {
     // TODO: Implement
-    // Format: 12,44,22,31,..., 12
-    public static void export(Solution solution, String path) {
+    // Format (CSV): instance; method_name; nodes
+    public static void export(List<String> instances, List<String> methods, List<Solution> solutions, String path) {
 
     }
 }

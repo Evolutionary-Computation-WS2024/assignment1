@@ -30,7 +30,7 @@ public class Patch {
         
         Node current_node = starting_node;
         while (true) {
-            Iterator<Integer> remaining_nodes_iterator = remaining_nodes.iterator();
+            remaining_nodes_iterator = remaining_nodes.iterator();
             while (remaining_nodes_iterator.hasNext()) {
                 Extension candidate = new Extension(this.tspInstance, current_node, remaining_nodes_iterator.next());
                 if (candidate.is_better(best_found_extension)) {
@@ -40,10 +40,11 @@ public class Patch {
             if (!current_node.hasNext()) {
                 break;
             }
+            current_node = current_node.getNext();
         }
         // TODO check also for first node
         best_found_extension.add_to_the_patch();
-        remaining_nodes.remove(best_found_extension.extra_node_id);
+        this.remaining_nodes.remove(best_found_extension.extra_node_id);
     }
     public List<Integer> toList() {
         List<Integer> list = new ArrayList<>();

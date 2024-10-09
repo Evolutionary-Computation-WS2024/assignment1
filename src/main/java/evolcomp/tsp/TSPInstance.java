@@ -1,16 +1,22 @@
 package evolcomp.tsp;
 
+import evolcomp.misc.Exponentation;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 public final class TSPInstance {
-    private final HashMap<Integer, Point> points = new HashMap<>();
-    private final HashMap<Integer, HashMap<Integer, Integer>> distances = new HashMap<>();
+    private final HashMap<Integer, Point> points;
+    private final HashMap<Integer, HashMap<Integer, Integer>> distances;
+    private final int hashMapCapacity;
     private String name;
     private final int howManyNodes;
 
     public TSPInstance(List<Point> points) {
+        hashMapCapacity = Exponentation.getClosest2ToThePowerOf(points.size());
+        this.points = new HashMap<>(hashMapCapacity, 1.0f);
+        this.distances = new HashMap<>(hashMapCapacity, 1.0f);
         this.howManyNodes = points.size();
         this.name = null;
         populatePoints(points);
@@ -18,6 +24,9 @@ public final class TSPInstance {
     }
 
     public TSPInstance(List<Point> points, String name) {
+        hashMapCapacity = Exponentation.getClosest2ToThePowerOf(points.size());
+        this.points = new HashMap<>(hashMapCapacity, 1.0f);
+        this.distances = new HashMap<>(hashMapCapacity, 1.0f);
         this.howManyNodes = points.size();
         this.name = name;
         populatePoints(points);
@@ -76,7 +85,7 @@ public final class TSPInstance {
 
     private void populateDistances() {
         for (int i = 0; i < howManyNodes; i++) {
-            distances.put(i, new HashMap<>());
+            distances.put(i, new HashMap<>(hashMapCapacity, 1.0f));
             distances.get(i).put(i, 0);
         }
 

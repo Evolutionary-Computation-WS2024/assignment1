@@ -48,7 +48,7 @@ public final class Evaluator {
         return minValue;
     }
 
-    public Cycle getBestSolution() {
+    public Cycle getBestCycle() {
         return bestCycle;
     }
 }

@@ -5,14 +5,21 @@ import java.util.Iterator;
 import java.util.List;
 
 public final class TSPInstance {
-    private final HashMap<Integer, Point> points;
-    private final HashMap<Integer, HashMap<Integer, Integer>> distances;
+    private final HashMap<Integer, Point> points = new HashMap<>();
+    private final HashMap<Integer, HashMap<Integer, Integer>> distances = new HashMap<>();
+    private String name;
     private final int howManyNodes;
 
     public TSPInstance(List<Point> points) {
-        this.points = new HashMap<>();
-        this.distances = new HashMap<>();
         this.howManyNodes = points.size();
+        this.name = null;
+        populatePoints(points);
+        populateDistances();
+    }
+
+    public TSPInstance(List<Point> points, String name) {
+        this.howManyNodes = points.size();
+        this.name = name;
         populatePoints(points);
         populateDistances();
     }
@@ -85,5 +92,20 @@ public final class TSPInstance {
 
     public int getHowManyNodes() {
         return howManyNodes;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "TSPInstance{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

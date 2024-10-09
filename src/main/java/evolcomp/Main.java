@@ -8,14 +8,23 @@ import evolcomp.strategy.*;
 import evolcomp.tsp.TSPInstance;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         List<TSPInstance> tspInstances = new ArrayList<>();
-        tspInstances.add(CostTspReader.read("TSPA.csv"));
-        tspInstances.add(CostTspReader.read("TSPB.csv"));
+
+        URL[] paths = {
+                Main.class.getClassLoader().getResource("TSPA.csv"),
+                Main.class.getClassLoader().getResource("TSPB.csv")
+        };
+
+        for (URL path : paths) {
+            assert path != null;
+            tspInstances.add(CostTspReader.read(path));
+        }
 
         List<Strategy> strategies = new ArrayList<>();
         strategies.add(new RandomStrategy());

@@ -22,4 +22,9 @@ public final class NNToAnyNodeStrategy extends Strategy {
         }
         return new Cycle(patch.toList());
     }
+
+    @Override
+    public String toString() {
+        return "Nearest Neighbor to Any Node";
+    }
 }

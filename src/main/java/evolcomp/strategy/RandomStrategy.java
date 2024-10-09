@@ -29,4 +29,9 @@ public final class RandomStrategy extends Strategy {
         
         return new Cycle(all_nodes);
     }
+
+    @Override
+    public String toString() {
+        return "Random";
+    }
 }

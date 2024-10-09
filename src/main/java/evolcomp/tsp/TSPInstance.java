@@ -1,24 +1,36 @@
 package evolcomp.tsp;
 
+import evolcomp.misc.Exponentiation;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 public final class TSPInstance {
-    private final HashMap<Integer, Point> points = new HashMap<>();
-    private final HashMap<Integer, HashMap<Integer, Integer>> distances = new HashMap<>();
+    private final HashMap<Integer, Point> points;
+    private final HashMap<Integer, HashMap<Integer, Integer>> distances;
+    private final int hashMapCapacity;
     private String name;
     private final int howManyNodes;
+    private final int requiredCycleLength;
 
     public TSPInstance(List<Point> points) {
+        hashMapCapacity = Exponentiation.getClosest2ToThePowerOf(points.size());
+        this.points = new HashMap<>(hashMapCapacity, 1.0f);
+        this.distances = new HashMap<>(hashMapCapacity, 1.0f);
         this.howManyNodes = points.size();
+        this.requiredCycleLength = (points.size() + 1) / 2;
         this.name = null;
         populatePoints(points);
         populateDistances();
     }
 
     public TSPInstance(List<Point> points, String name) {
+        hashMapCapacity = Exponentiation.getClosest2ToThePowerOf(points.size());
+        this.points = new HashMap<>(hashMapCapacity, 1.0f);
+        this.distances = new HashMap<>(hashMapCapacity, 1.0f);
         this.howManyNodes = points.size();
+        this.requiredCycleLength = (points.size() + 1) / 2;
         this.name = name;
         populatePoints(points);
         populateDistances();
@@ -52,8 +64,13 @@ public final class TSPInstance {
     }
 
     public int getDistanceBetween(final int x, final int y) {
-        assert x < howManyNodes;
-        assert y < howManyNodes;
+        if (x < 0 || x >= howManyNodes) {
+            throw new IllegalArgumentException("X must be between 0 and " + (howManyNodes - 1) + " (x=" + x + " was provided)");
+        }
+        if (y < 0 || y >= howManyNodes) {
+            throw new IllegalArgumentException("Y must be between 0 and " + (howManyNodes - 1) + " (y=" + y + " was provided)");
+        }
+
         return distances.get(x).get(y);
     }
 
@@ -71,7 +88,7 @@ public final class TSPInstance {
 
     private void populateDistances() {
         for (int i = 0; i < howManyNodes; i++) {
-            distances.put(i, new HashMap<>());
+            distances.put(i, new HashMap<>(hashMapCapacity, 1.0f));
             distances.get(i).put(i, 0);
         }
 
@@ -90,9 +107,14 @@ public final class TSPInstance {
         }
     }
 
-    //Returns number of nodes for this TSP instance
+    // Returns number of nodes for this TSP instance
     public int getHowManyNodes() {
         return howManyNodes;
+    }
+
+    // Returns number of nodes required to form a cycle
+    public int getRequiredCycleLength() {
+        return requiredCycleLength;
     }
 
     public String getName() {
@@ -105,8 +127,6 @@ public final class TSPInstance {
 
     @Override
     public String toString() {
-        return "TSPInstance{" +
-                "name='" + name + '\'' +
-                '}';
+        return name;
     }
 }

@@ -11,4 +11,9 @@ public final class GreedyCycleStrategy extends Strategy {
     public Cycle apply(final TSPInstance tspInstance, final int startNode) {
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "Greedy Cycle";
+    }
 }

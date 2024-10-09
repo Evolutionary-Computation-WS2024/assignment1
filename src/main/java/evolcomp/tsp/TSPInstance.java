@@ -105,8 +105,6 @@ public final class TSPInstance {
 
     @Override
     public String toString() {
-        return "TSPInstance{" +
-                "name='" + name + '\'' +
-                '}';
+        return name;
     }
 }

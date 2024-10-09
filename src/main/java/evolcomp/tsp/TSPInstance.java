@@ -90,6 +90,7 @@ public final class TSPInstance {
         }
     }
 
+    //Returns number of nodes for this TSP instance
     public int getHowManyNodes() {
         return howManyNodes;
     }

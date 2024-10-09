@@ -52,8 +52,13 @@ public final class TSPInstance {
     }
 
     public int getDistanceBetween(final int x, final int y) {
-        assert x < howManyNodes;
-        assert y < howManyNodes;
+        if (x < 0 || x >= howManyNodes) {
+            throw new IllegalArgumentException("X must be between 0 and " + (howManyNodes - 1) + " (x=" + x + " was provided)");
+        }
+        if (y < 0 || y >= howManyNodes) {
+            throw new IllegalArgumentException("Y must be between 0 and " + (howManyNodes - 1) + " (y=" + y + " was provided)");
+        }
+
         return distances.get(x).get(y);
     }
 

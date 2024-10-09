@@ -18,7 +18,7 @@ public final class RandomStrategy extends Strategy {
         int half_no_nodes = (int) Math.ceil(no_nodes / 2.0);
         
         List<Integer> all_nodes = new ArrayList<>();
-        for (int i = 1; i <= no_nodes; i++) {
+        for (int i = 0; i < no_nodes; i++) {
             if (i != startNode) {
                 all_nodes.add(i);
             }

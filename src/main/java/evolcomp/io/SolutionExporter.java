@@ -10,7 +10,7 @@ import java.util.List;
 public final class SolutionExporter {
     // Format (CSV): instance; method_name; nodes
     public static void export(List<SolutionRow> records, String path) throws IOException {
-        try (FileWriter out = new FileWriter("results.csv")) {
+        try (FileWriter out = new FileWriter(path)) {
             CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
                     .setDelimiter(';')
                     .build();

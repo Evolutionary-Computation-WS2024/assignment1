@@ -26,7 +26,7 @@ public final class CostTspReader {
         try (BufferedReader reader = Files.newBufferedReader(path)) {
             try (CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.builder()
                     .setDelimiter(";")
-                    .build());) {
+                    .build())) {
 
                 List<Point> points = csvParser.stream()
                     .map(record -> {

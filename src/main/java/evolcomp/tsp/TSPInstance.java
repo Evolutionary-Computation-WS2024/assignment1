@@ -1,6 +1,7 @@
 package evolcomp.tsp;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public final class TSPInstance {
@@ -14,6 +15,33 @@ public final class TSPInstance {
         this.howManyNodes = points.size();
         populatePoints(points);
         populateDistances();
+    }
+
+    public int evaluate(Cycle cycle) {
+        int totalCost = 0;
+
+        Iterator<Integer> i = cycle.nodes().iterator();
+        int prev = i.next();
+
+        while (i.hasNext()) {
+            // add cost of node
+            totalCost += getCostAt(prev);
+
+            int next = i.next();
+
+            // add cost of edge
+            totalCost += getDistanceBetween(prev, next);
+
+            prev = next;
+        }
+
+        // add cost of edge between first and last
+        totalCost += getDistanceBetween(cycle.nodes().get(0), prev);
+
+        // add cost of last node
+        totalCost += getCostAt(prev);
+
+        return totalCost;
     }
 
     public int getDistanceBetween(final int x, final int y) {

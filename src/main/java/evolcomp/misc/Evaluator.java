@@ -1,14 +1,14 @@
 package evolcomp.misc;
 
 import evolcomp.strategy.Strategy;
-import evolcomp.tsp.Solution;
+import evolcomp.tsp.Cycle;
 import evolcomp.tsp.TSPInstance;
 
 public final class Evaluator {
     private final TSPInstance instance;
     private final Strategy strategy;
 
-    private Solution bestSolution;
+    private Cycle bestCycle;
     private int minValue = Integer.MAX_VALUE;
     private int maxValue = Integer.MIN_VALUE;
     private int averageValue;
@@ -22,14 +22,14 @@ public final class Evaluator {
     private void execute() {
         int totalValue = 0;
         for (int i=0; i<instance.getHowManyNodes(); i++) {
-            Solution currentSolution = strategy.apply(instance, i);
-            int currentValue = currentSolution.evaluate(instance);
+            Cycle currentCycle = strategy.apply(instance, i);
+            int currentValue = instance.evaluate(currentCycle);
             if (currentValue > maxValue) {
                 maxValue = currentValue;
             }
             else if (currentValue < minValue) {
                 minValue = currentValue;
-                bestSolution = currentSolution;
+                bestCycle = currentCycle;
             }
             totalValue += currentValue;
         }
@@ -48,7 +48,7 @@ public final class Evaluator {
         return minValue;
     }
 
-    public Solution getBestSolution() {
-        return bestSolution;
+    public Cycle getBestSolution() {
+        return bestCycle;
     }
 }

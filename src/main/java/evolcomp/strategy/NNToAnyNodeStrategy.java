@@ -17,7 +17,7 @@ public final class NNToAnyNodeStrategy extends Strategy {
         
         Patch patch = new Patch(startNode, tspInstance);
         
-        for (int i = 2; i <= half_no_nodes; i++) {
+        for (int i = 1; i <= half_no_nodes; i++) {
             patch.extend();
         }
         return new Cycle(patch.toList());

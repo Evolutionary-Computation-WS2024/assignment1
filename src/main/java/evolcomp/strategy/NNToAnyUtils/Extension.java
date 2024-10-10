@@ -18,15 +18,15 @@ public class Extension {
     public Extension(TSPInstance instance, evolcomp.strategy.NNToAnyUtils.Node anchor, int extra_node_id) {
         this.extra_node_id = extra_node_id;
         this.anchor = anchor;
-        this.utility_difference = this.computeUtilityDifference();
         this.instance = instance;
+        this.utility_difference = this.computeUtilityDifference();
     }
     private int computeUtilityDifference() {
-        int costs = instance.getCostAt(extra_node_id);
-        costs += instance.getDistanceBetween(anchor.point_id, extra_node_id);
+        int costs = this.instance.getCostAt(extra_node_id);
+        costs += this.instance.getDistanceBetween(anchor.point_id, extra_node_id);
         if (this.anchor.hasNext()) {
-            costs += instance.getDistanceBetween(extra_node_id, anchor.getNext().point_id);
-            int gains = instance.getDistanceBetween(anchor.point_id, anchor.getNext().point_id);
+            costs += this.instance.getDistanceBetween(extra_node_id, anchor.getNext().point_id);
+            int gains = this.instance.getDistanceBetween(anchor.point_id, anchor.getNext().point_id);
             return costs-gains;
         }
         return costs;

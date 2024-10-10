@@ -4,8 +4,6 @@
  */
 package evolcomp.strategy.NNToAnyUtils;
 
-import evolcomp.tsp.TSPInstance;
-
 /**
  *
  * @author User

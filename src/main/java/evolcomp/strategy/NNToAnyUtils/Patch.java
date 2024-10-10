@@ -6,6 +6,7 @@ package evolcomp.strategy.NNToAnyUtils;
 
 import evolcomp.tsp.TSPInstance;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +22,14 @@ public class Patch {
     
     public Patch(int starting_point, TSPInstance tspInstance) {
         this.tspInstance = tspInstance;
+        int no_nodes = tspInstance.getHowManyNodes();
+        this.remaining_nodes = new HashSet<>();
+        for (int i = 0; i < no_nodes; i++) {
+            this.remaining_nodes.add(i); // Add numbers from 0 to n-1
+        }
+        
         this.starting_node = new Node(starting_point);
+        this.remaining_nodes.remove(starting_point);
     }
     public void extend() {
         // initialize any solution for comaprison
@@ -73,6 +81,7 @@ public class Patch {
             if (!current_node.hasNext()) {
                 break;
             }
+            current_node = current_node.getNext();
         }
         return list;
     }

@@ -7,14 +7,15 @@ import org.apache.commons.csv.CSVParser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
 public final class CostTspReader {
-    public static TSPInstance read(URL url) throws IOException {
-        Path path = Path.of(url.getPath());
+    public static TSPInstance read(URL url) throws IOException, URISyntaxException {
+        Path path = Path.of(url.toURI());
 
         String fileName = path.getFileName().toString();
         if (!fileName.endsWith(".csv")) {

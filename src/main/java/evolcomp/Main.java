@@ -8,12 +8,13 @@ import evolcomp.strategy.*;
 import evolcomp.tsp.TSPInstance;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, URISyntaxException {
         List<TSPInstance> tspInstances = new ArrayList<>();
 
         URL[] paths = {
@@ -30,10 +31,10 @@ public class Main {
         strategies.add(new RandomStrategy());
         strategies.add(new NNToEndStrategy());
         strategies.add(new NNToAnyNodeStrategy());
-        strategies.add(new GreedyCycleStrategy());
+        //strategies.add(new GreedyCycleStrategy());
 
         List<SolutionRow> solutions = new ArrayList<>();
-        for (TSPInstance instance : tspInstances) {
+        for (TSPInstance instance : tspInstances) {          
             for (Strategy strategy : strategies) {
                 Evaluator evaluator = new Evaluator(instance, strategy);
 
@@ -45,7 +46,8 @@ public class Main {
                 solutions.add(row);
             }
         }
-
+        System.out.print("Solutions ready");
         SolutionExporter.export(solutions, "solution.csv");
+        System.out.print("Solutions exported");
     }
 }

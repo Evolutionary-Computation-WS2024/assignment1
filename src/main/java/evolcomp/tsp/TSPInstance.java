@@ -37,6 +37,11 @@ public final class TSPInstance {
     }
 
     public int evaluate(Cycle cycle) {
+        int cycleSize = cycle.nodes().size();
+        if (cycleSize != requiredCycleLength) {
+            throw new IllegalArgumentException("Provided cycle length (" + cycleSize + ") does not match instance's required cycle length (" + requiredCycleLength + ")!");
+        }
+
         int totalCost = 0;
 
         Iterator<Integer> i = cycle.nodes().iterator();

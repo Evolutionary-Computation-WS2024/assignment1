@@ -17,13 +17,13 @@ public final class NNToEndStrategy extends Strategy {
         nodes.add(startNode);
 
         Set<Integer> remaining = new HashSet<>();
-        for (int i=0; i<tspInstance.getHowManyNodes(); i++) {
+        for (int i = 0; i < tspInstance.getHowManyNodes(); i++) {
             remaining.add(i);
         }
         remaining.remove(startNode);
 
         int lastNode = startNode;
-        for (int i=1; i<=tspInstance.getRequiredCycleLength(); i++) {
+        for (int i = 1; i < tspInstance.getRequiredCycleLength(); i++) {
             int shortestDistance = Integer.MAX_VALUE;
             int closestNode = -1;
 

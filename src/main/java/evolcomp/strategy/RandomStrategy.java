@@ -24,7 +24,7 @@ public final class RandomStrategy extends Strategy {
             }
         } 
         Collections.shuffle(all_nodes);
-        all_nodes.subList(0, half_no_nodes-1);
+        all_nodes = all_nodes.subList(0, half_no_nodes-1);
         all_nodes.add(startNode);
         
         return new Cycle(all_nodes);

@@ -6,9 +6,18 @@ import evolcomp.tsp.TSPInstance;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public final class RandomStrategy extends Strategy {
-    public RandomStrategy() {}
+    private final Random rand;
+
+    public RandomStrategy() {
+        this.rand = new Random();
+    }
+
+    public RandomStrategy(int seed) {
+        this.rand = new Random(seed);
+    }
 
     // TODO: Implement
     @Override
@@ -23,7 +32,7 @@ public final class RandomStrategy extends Strategy {
                 all_nodes.add(i);
             }
         } 
-        Collections.shuffle(all_nodes);
+        Collections.shuffle(all_nodes, rand);
         all_nodes = all_nodes.subList(0, half_no_nodes-1);
         all_nodes.add(startNode);
         

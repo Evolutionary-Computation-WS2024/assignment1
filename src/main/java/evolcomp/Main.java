@@ -28,7 +28,7 @@ public class Main {
         }
 
         List<Strategy> strategies = new ArrayList<>();
-        strategies.add(new RandomStrategy());
+        strategies.add(new RandomStrategy(42));
         strategies.add(new NNToEndStrategy());
         strategies.add(new NNToAnyNodeStrategy());
         strategies.add(new GreedyCycleStrategy());

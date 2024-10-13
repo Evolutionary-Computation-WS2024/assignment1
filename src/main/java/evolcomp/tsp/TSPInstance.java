@@ -80,7 +80,7 @@ public final class TSPInstance {
     }
 
     public int getCostAt(final int x) {
-        assert x < howManyNodes;
+        assert 0 <= x && x < howManyNodes;
         return points.get(x).cost();
     }
 

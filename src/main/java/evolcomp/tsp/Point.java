@@ -12,9 +12,7 @@ public record Point(int nodeId, int x, int y, int cost) {
 
     @Override
     public int hashCode() {
-        int result = x;
-        result = result + (46340 * y);
-        return result;
+        return x*10_000 + y;
     }
 
     @Override

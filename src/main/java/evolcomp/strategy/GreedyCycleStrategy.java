@@ -38,20 +38,31 @@ public final class GreedyCycleStrategy extends Strategy {
         remaining.remove(startNode);
 
         List<Integer> cycle = getFirstCycle(tspInstance, startNode, remaining);
-        int recentNode = cycle.get(1);
-        remaining.remove(recentNode);
+        int secondNode = cycle.get(1);
+        remaining.remove(secondNode);
 
         Queue<Edge> queue = new PriorityQueue<>();
-        queue.add(generateNewEdge(tspInstance, remaining, startNode, recentNode));
 
-        Edge edge;
-        for (int i=2; i<tspInstance.getRequiredCycleLength(); i++) {
-            edge = queue.poll();
-            while (edge != null && !(remaining.contains(edge.cheapestNewNode))) {
+        Edge edge = generateNewEdge(tspInstance, remaining, startNode, secondNode);
+        int recentNode = edge.cheapestNewNode;
+        remaining.remove(recentNode);
+        cycle.add(recentNode);
+
+        queue.add(generateNewEdge(tspInstance, remaining, edge.start, edge.end));
+        queue.add(generateNewEdge(tspInstance, remaining, edge.start, recentNode));
+        queue.add(generateNewEdge(tspInstance, remaining, edge.end, recentNode));
+
+        for (int i=3; i<tspInstance.getRequiredCycleLength(); i++) {
+            while (true) {
                 edge = queue.poll();
-            }
-            if (edge == null) {
-                throw new RuntimeException("No edges");
+                if (edge == null) {
+                    throw new RuntimeException("No edges");
+                }
+                if (remaining.contains(edge.cheapestNewNode)) {
+                    break;
+                } else {
+                    queue.add(generateNewEdge(tspInstance, remaining, edge.start, edge.end));
+                }
             }
 
             recentNode = edge.cheapestNewNode;
@@ -60,13 +71,24 @@ public final class GreedyCycleStrategy extends Strategy {
             queue.add(generateNewEdge(tspInstance, remaining, edge.start, recentNode));
             queue.add(generateNewEdge(tspInstance, remaining, edge.end, recentNode));
 
+            // Check if to insert between first and last element
+            int lastElementInCycle = cycle.get(cycle.size() - 1);
+            int firstElementInCycle = cycle.get(0);
+            boolean isEdgeOnBoundsOfCycle = ((firstElementInCycle == edge.start) && (lastElementInCycle == edge.end));
+            isEdgeOnBoundsOfCycle |= ((firstElementInCycle == edge.end) && (lastElementInCycle == edge.start));
+
             // update cycle
-            ListIterator<Integer> iter = cycle.listIterator();
-            int val = iter.next();
-            while (!(val == edge.start || val == edge.end)) {
-                val = iter.next();
+            if (isEdgeOnBoundsOfCycle) {
+                cycle.add(0, recentNode);
+            } else {
+                ListIterator<Integer> iter = cycle.listIterator();
+                int val = iter.next();
+                while (!(val == edge.start || val == edge.end)) {
+                    val = iter.next();
+                }
+                iter.add(recentNode);
+
             }
-            iter.add(recentNode);
         }
         return new Cycle(cycle);
     }

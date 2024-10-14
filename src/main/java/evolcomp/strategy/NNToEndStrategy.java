@@ -29,6 +29,7 @@ public final class NNToEndStrategy extends Strategy {
 
             for (int candidateNode : remaining) {
                 int distance = tspInstance.getDistanceBetween(lastNode, candidateNode);
+                distance += tspInstance.getCostAt(candidateNode);
                 if (distance < shortestDistance) {
                     closestNode = candidateNode;
                     shortestDistance = distance;

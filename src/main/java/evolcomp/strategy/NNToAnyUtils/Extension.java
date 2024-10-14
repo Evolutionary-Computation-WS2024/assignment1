@@ -22,8 +22,8 @@ public class Extension {
         this.utility_difference = this.computeUtilityDifference();
     }
     private int computeUtilityDifference() {
-        //int costs = this.instance.getCostAt(extra_node_id);
-        int costs = this.instance.getDistanceBetween(anchor.point_id, extra_node_id);
+        int costs = this.instance.getCostAt(extra_node_id);
+        costs += this.instance.getDistanceBetween(anchor.point_id, extra_node_id);
         if (this.anchor.hasNext()) {
             costs += this.instance.getDistanceBetween(extra_node_id, anchor.getNext().point_id);
             int gains = this.instance.getDistanceBetween(anchor.point_id, anchor.getNext().point_id);

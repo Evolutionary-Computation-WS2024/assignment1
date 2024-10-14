@@ -56,8 +56,8 @@ public class Patch {
         int best_utility_difference_for_starting_node = 999999999;
         while (remaining_nodes_iterator.hasNext()) {
             int starting_node_candidate = remaining_nodes_iterator.next();
-            //int utility_difference = this.tspInstance.getCostAt(starting_node_candidate);
-            int utility_difference = this.tspInstance.getDistanceBetween(starting_node_candidate, this.starting_node.point_id);
+            int utility_difference = this.tspInstance.getCostAt(starting_node_candidate);
+            utility_difference += this.tspInstance.getDistanceBetween(starting_node_candidate, this.starting_node.point_id);
             if (utility_difference < best_utility_difference_for_starting_node) {
                 best_starting_node = starting_node_candidate;
                 best_utility_difference_for_starting_node = utility_difference;

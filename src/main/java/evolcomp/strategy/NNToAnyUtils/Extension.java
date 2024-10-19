@@ -5,7 +5,6 @@
 package evolcomp.strategy.NNToAnyUtils;
 
 import evolcomp.tsp.TSPInstance;
-import evolcomp.strategy.NNToAnyUtils.Patch;
 
 /**
  *
@@ -16,12 +15,10 @@ public class Extension {
     public final int extra_node_id;
     public final evolcomp.strategy.NNToAnyUtils.Node anchor;
     private final TSPInstance instance;
-    private final Patch path;
-    public Extension(TSPInstance instance, evolcomp.strategy.NNToAnyUtils.Node anchor, int extra_node_id, Patch path) {
+    public Extension(TSPInstance instance, evolcomp.strategy.NNToAnyUtils.Node anchor, int extra_node_id) {
         this.extra_node_id = extra_node_id;
         this.anchor = anchor;
         this.instance = instance;
-        this.path = path;
         this.utility_difference = this.computeUtilityDifference();
     }
     private int computeUtilityDifference() {
@@ -32,14 +29,7 @@ public class Extension {
             int gains = this.instance.getDistanceBetween(anchor.point_id, anchor.getNext().point_id);
             return costs-gains;
         }
-        else if (anchor == path.starting_node){
-            return costs; 
-        }
-        else{
-            costs += this.instance.getDistanceBetween(extra_node_id, path.starting_node.point_id);
-            int gains = this.instance.getDistanceBetween(anchor.point_id, path.starting_node.point_id);
-            return costs-gains;
-        }
+        return costs;
     }
     public void add_to_the_patch() {
         if (this.anchor.hasNext()) {
